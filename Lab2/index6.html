@@ -14,6 +14,9 @@
         let arr2 = ['ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'ninteen'];
         let arr3 = ['twenty', 'thirty', 'fourty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninty'];
         var result="";
+        if(num===0) {
+            result="zero";
+        }
         if(num>=100) {
             result += arr1[Math.floor(num/100)] +" hundred ";
             num%=100;
@@ -26,8 +29,8 @@
             result += arr2[Math.floor(num/10)-1] + " ";
             num%=10;
         }
-        if(num>=0) {
-            result += arr2[num];
+        if(num>0) {
+            result += arr1[num];
         }
         alert(result);
     </script>
