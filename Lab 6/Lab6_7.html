@@ -56,6 +56,8 @@
         </div>
     </div>
 
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
     <script>
         var students = new Array();
         var idToEdit = -1;
@@ -98,27 +100,27 @@
                     Name: name,
                     Enrollment: enrollment
                 };
-                if(idToEdit>=0) {
-                            for(let i=0; i<students.length; i++) {
-                                if(i===idToEdit) {
-                                    continue;
-                                }
-                                else {
-                                    if(students[i].Enrollment === temp.Enrollment) {
-                                        document.getElementById('enrollment').focus();
-                                        document.getElementById('enrollmentErr').innerHTML = "Student with entered enrollment number already exists. Enter unique enrollment number";
-                                        return;
-                                    }
-                                }
+                if (idToEdit >= 0) {
+                    for (let i = 0; i < students.length; i++) {
+                        if (i === idToEdit) {
+                            continue;
+                        }
+                        else {
+                            if (students[i].Enrollment === temp.Enrollment) {
+                                document.getElementById('enrollment').focus();
+                                document.getElementById('enrollmentErr').innerHTML = "Student with entered enrollment number already exists. Enter unique enrollment number";
+                                return;
                             }
-                            students[idToEdit]=temp;
-                            idToEdit = -1;
-                            document.getElementById('add').innerHTML = "Add";
-                            document.getElementById('name').value = "";
-                            document.getElementById('enrollment').value = "";
-                            display();
-                            return;
+                        }
                     }
+                    students[idToEdit] = temp;
+                    idToEdit = -1;
+                    document.getElementById('add').innerHTML = "Add";
+                    document.getElementById('name').value = "";
+                    document.getElementById('enrollment').value = "";
+                    display();
+                    return;
+                }
                 if (students.length === 0) {
                     students.push(temp);
                     display();
@@ -162,8 +164,25 @@
         }
 
         function deleteStudent(id) {
-            students.splice(id,1);
-            display();
+            swal({
+                title: "Are you sure?",
+                text: "Once deleted, you will not be able to recover the record!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        students.splice(id, 1);
+                        display();
+                        swal("Student Record has been deleted!", {
+                            icon: "success",
+                        });
+                    } else {
+                        swal("Student Record is safe!");
+                    }
+                });
+            
         }
     </script>
 
